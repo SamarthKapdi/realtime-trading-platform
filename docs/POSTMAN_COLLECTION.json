@@ -1,0 +1,150 @@
+{
+  "info": {
+    "name": "ByteVox Exchange API",
+    "description": "API collection for ByteVox Exchange - a simplified trading simulator for the BYTE asset.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000/api"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "Place BUY Limit Order",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/orders",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"side\": \"BUY\",\n  \"price\": 100,\n  \"quantity\": 5\n}"
+        }
+      }
+    },
+    {
+      "name": "Place SELL Limit Order",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/orders",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"side\": \"SELL\",\n  \"price\": 95,\n  \"quantity\": 3\n}"
+        }
+      }
+    },
+    {
+      "name": "Place BUY Market Order",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/orders",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"side\": \"BUY\",\n  \"order_type\": \"MARKET\",\n  \"quantity\": 5\n}"
+        }
+      }
+    },
+    {
+      "name": "Get Order Book",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/orderbook"
+      }
+    },
+    {
+      "name": "Get Trade History",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/trades",
+        "url": {
+          "raw": "{{baseUrl}}/trades?limit=50&offset=0",
+          "host": ["{{baseUrl}}"],
+          "path": ["trades"],
+          "query": [
+            { "key": "limit", "value": "50" },
+            { "key": "offset", "value": "0" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Statistics",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/stats"
+      }
+    },
+    {
+      "name": "Get Order by ID",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/orders/1"
+      }
+    },
+    {
+      "name": "Cancel Order",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/orders/1"
+      }
+    },
+    {
+      "name": "Edge Case - Negative Quantity",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/orders",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"side\": \"BUY\",\n  \"price\": 100,\n  \"quantity\": -5\n}"
+        }
+      }
+    },
+    {
+      "name": "Edge Case - Invalid Side",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/orders",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"side\": \"INVALID\",\n  \"price\": 100,\n  \"quantity\": 5\n}"
+        }
+      }
+    },
+    {
+      "name": "Edge Case - Empty Request",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/orders",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        }
+      }
+    }
+  ]
+}
